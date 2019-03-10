@@ -1,5 +1,6 @@
 <!-- form>div.form-group>label+select -->
 
+
 <div class="container">
     <h1>New Vechile</h1>
     <form>
@@ -12,8 +13,13 @@
                 [(ngModel)]="vechile.make"
                 name="make"
             >
-            <option value=""></option>
-            <option *ngFor="let make of makes" value="{{ make.id }}">{{ make.name }}</option>
+                <option value></option>
+                <option
+                    *ngFor="let make of makes"
+                    value="{{ make.id }}"
+                >
+                    {{ make.name }}
+                </option>
             </select>
         </div>
         <!-- zenCoding To Generate Faster HTML -->
@@ -24,9 +30,20 @@
                 id="model"
                 class="form-control"
             >
-          <option value=""></option>
-          <option *ngFor="let model of models" value="model.id">{{ model.name }}</option>
-          </select>
+                <option value></option>
+                <option
+                    *ngFor="let model of models"
+                    value="model.id"
+                >
+                    {{ model.name }}
+                </option>
+            </select>
+        </div>
+        <h1>Features</h1>
+        <div *ngFor="let feature of features" class="checkbox">
+            <label for="feature{{ feature.id }}">
+                <input type="checkbox" id="feature{{ feature.id }}"> {{ feature.name }}
+            </label>
         </div>
     </form>
 </div>
