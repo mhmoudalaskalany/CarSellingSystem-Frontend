@@ -8,9 +8,12 @@
             <select
                 id="make"
                 class="form-control"
+                (change)="onMakeChange()"
+                [(ngModel)]="vechile.make"
+                name="make"
             >
             <option value=""></option>
-            <option *ngFor="let make of makes" value="make.id">{{ make.name }}</option>
+            <option *ngFor="let make of makes" value="{{ make.id }}">{{ make.name }}</option>
             </select>
         </div>
         <!-- zenCoding To Generate Faster HTML -->
@@ -20,7 +23,10 @@
             <select
                 id="model"
                 class="form-control"
-            ></select>
+            >
+          <option value=""></option>
+          <option *ngFor="let model of models" value="model.id">{{ model.name }}</option>
+          </select>
         </div>
     </form>
 </div>

@@ -1,5 +1,6 @@
 // importing third parties modules
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 // importing modules
@@ -17,7 +18,8 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
