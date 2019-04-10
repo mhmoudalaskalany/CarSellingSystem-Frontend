@@ -11,7 +11,9 @@ export class VehicleFormComponent implements OnInit {
   makes: any[];
   models: any[];
   features: any[];
-  vechile: any = {};
+  vehicle: any = {
+    features : []
+  };
   constructor(
     private vehicleService: VehicleService,
     ) { }
@@ -27,8 +29,18 @@ export class VehicleFormComponent implements OnInit {
 
   onMakeChange() {
     // tslint:disable-next-line:triple-equals
-    const selectedMake = this.makes.find(m => m.id == this.vechile.make);
+    const selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
     this.models = selectedMake ? selectedMake.models : [];
+    delete this.vehicle.modelId;
+  }
+  onFeatureToggle(id , $event)
+  {
+    if ($event.target.checked) {
+      this.vehicle.features.push(id);
+    } else {
+      var index = this.vehicle.features.indexOf(id);
+      this.vehicle.features.splice(index, 1);
+    }
   }
 
 }
