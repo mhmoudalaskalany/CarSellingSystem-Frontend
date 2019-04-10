@@ -14,7 +14,7 @@ export class VehicleService {
     return this.http.get(this.baseUrl + '/api/makes');
   }
   create(vehicle) {
-    console.log(vehicle);
-    return this.http.post(this.baseUrl + '/api/vehicles/add', vehicle);
+    return this.http.post(this.baseUrl + '/api/vehicles', vehicle);
   }
+
 }
