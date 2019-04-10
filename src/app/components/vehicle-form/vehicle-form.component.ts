@@ -12,14 +12,15 @@ export class VehicleFormComponent implements OnInit {
   models: any[];
   features: any[];
   vehicle: any = {
-    features : []
+    features : [],
+    contact : {}
   };
   constructor(
     private vehicleService: VehicleService,
     ) { }
 
   ngOnInit() {
-    this.vehicleService.getMakes().subscribe((makes: any) =>{
+    this.vehicleService.getMakes().subscribe((makes: any) => {
       this.makes = makes;
     });
     this.vehicleService.getFeatures().subscribe((features: any) => {
@@ -33,12 +34,11 @@ export class VehicleFormComponent implements OnInit {
     this.models = selectedMake ? selectedMake.models : [];
     delete this.vehicle.modelId;
   }
-  onFeatureToggle(id , $event)
-  {
+  onFeatureToggle(id , $event) {
     if ($event.target.checked) {
       this.vehicle.features.push(id);
     } else {
-      var index = this.vehicle.features.indexOf(id);
+      const index = this.vehicle.features.indexOf(id);
       this.vehicle.features.splice(index, 1);
     }
   }
