@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from 'src/app/services/make/vehicle.service';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-vehicle-form',
   templateUrl: './vehicle-form.component.html',
@@ -17,6 +17,7 @@ export class VehicleFormComponent implements OnInit {
   };
   constructor(
     private vehicleService: VehicleService,
+    private toasterService: ToastrService
     ) { }
 
   ngOnInit() {
@@ -46,6 +47,8 @@ export class VehicleFormComponent implements OnInit {
   submit() {
     this.vehicleService.create(this.vehicle).subscribe((response: any) => {
       console.log(response);
+    }, error => {
+      this.toasterService.error('unexexted error happend');
     });
   }
 
