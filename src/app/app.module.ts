@@ -1,8 +1,9 @@
+import * as Raven from 'raven-js';
 // importing third parties modules
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 // importing modules
@@ -10,8 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 // importing component
 import { AppComponent } from './app.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
+import { AppErrorHandler } from './ErrorHandler/error-handler';
 
-
+Raven.config('https://90ede78f64044181b7b8f6036f64c3c9@sentry.io/1440333').install();
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,11 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
     FormsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide : ErrorHandler , useClass : AppErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
