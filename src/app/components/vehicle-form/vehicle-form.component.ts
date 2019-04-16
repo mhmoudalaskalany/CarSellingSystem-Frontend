@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from 'src/app/services/make/vehicle.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-vehicle-form',
   templateUrl: './vehicle-form.component.html',
@@ -15,15 +17,29 @@ export class VehicleFormComponent implements OnInit {
     contact : {}
   };
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private vehicleService: VehicleService,
-    ) { }
+    ) {
+      this.route.params.subscribe(p => {
+        this.vehicle.id = +p['id'];
+      });
+    }
 
   ngOnInit() {
-    this.vehicleService.getMakes().subscribe((makes: any) => {
-      this.makes = makes;
-    });
-    this.vehicleService.getFeatures().subscribe((features: any) => {
-      this.features = features;
+    const sources = [
+      this.vehicleService.getMakes(),
+      this.vehicleService.getFeatures(),
+      this.vehicleService.getVehicle(this.vehicle.id)
+    ];
+    Observable.forkJoin(sources).subscribe((data) => {
+      this.makes = data[0],
+      this.features = data[1]
+      this.vehicle = data[2]
+    }, error => {
+      if (error.status === 404) {
+        this.router.navigate(['/home']);
+      }
     });
   }
 

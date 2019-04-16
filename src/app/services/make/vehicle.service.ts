@@ -7,6 +7,10 @@ export class VehicleService {
   private baseUrl = 'https://localhost:44337';
   constructor(private http: HttpClient) {}
 
+  getVehicle(id)
+  {
+    return this.http.get(this.baseUrl + '/api/vehicles/' + id);
+  }
   getFeatures() {
     return this.http.get(this.baseUrl + '/api/features');
   }
