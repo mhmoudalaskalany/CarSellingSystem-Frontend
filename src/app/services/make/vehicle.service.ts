@@ -39,8 +39,8 @@ export class VehicleService {
 
   /** private methods */
   toQueryString(obj) {
-    let parts =[];
-    for(var property in obj) {
+    const parts = [];
+    for (let property in obj) {
       let value = obj[property];
       if(value != null && value != undefined)
       {

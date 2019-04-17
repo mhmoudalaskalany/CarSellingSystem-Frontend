@@ -35,7 +35,7 @@ export class VehicleFormComponent implements OnInit {
     private vehicleService: VehicleService,
   ) {
     this.route.params.subscribe(p => {
-      this.vehicle.id = +p['id'];
+      this.vehicle.id = +p.id;
     });
   }
 
@@ -80,7 +80,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   private populateModels() {
-    const selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
+    const selectedMake = this.makes.find(m => m.id === this.vehicle.makeId);
     this.models = selectedMake ? selectedMake.models : [];
   }
   onFeatureToggle(id, $event) {
