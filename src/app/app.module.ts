@@ -13,13 +13,15 @@ import { AppComponent } from './app.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { AppErrorHandler } from './ErrorHandler/error-handler';
 import { HomeComponentComponent } from './components/home-component/home-component.component';
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 
 Raven.config('https://90ede78f64044181b7b8f6036f64c3c9@sentry.io/1440333').install();
 @NgModule({
   declarations: [
     AppComponent,
     VehicleFormComponent,
-    HomeComponentComponent
+    HomeComponentComponent,
+    VehicleListComponent
   ],
   imports: [
     BrowserModule,
