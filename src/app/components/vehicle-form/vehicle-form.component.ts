@@ -4,6 +4,7 @@ import { VehicleService } from 'src/app/services/make/vehicle.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { Vehicle, SaveVehicle } from './models/vehicle';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-vehicle-form',
   templateUrl: './vehicle-form.component.html',
@@ -28,6 +29,7 @@ export class VehicleFormComponent implements OnInit {
 
   };
   constructor(
+    private toastService: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
     private vehicleService: VehicleService,
@@ -46,7 +48,7 @@ export class VehicleFormComponent implements OnInit {
         this.populateModels();
       }
     }, error => {
-      if(error.status === 404) {
+      if (error.status === 404) {
         this.router.navigate(['/home']);
       }
     });
@@ -58,7 +60,7 @@ export class VehicleFormComponent implements OnInit {
     this.vehicle.modelId = v.model.id;
     this.vehicle.isRegistered = v.isRegistered;
     this.vehicle.contact = v.contact;
-    this.vehicle.features = _.pluck(v.features , 'id');
+    this.vehicle.features = _.pluck(v.features, 'id');
   }
   getVehicleData() {
     const sources = [
@@ -90,9 +92,15 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    this.vehicleService.create(this.vehicle).subscribe((response: any) => {
-      console.log(response);
-    });
+    if (this.vehicle.id) {
+      this.vehicleService.update(this.vehicle).subscribe((data) => {
+        this.toastService.success('Vehicle Updated Successfully');
+      });
+    } else {
+      this.vehicleService.create(this.vehicle).subscribe((response: any) => {
+        console.log(response);
+      });
+    }
   }
 
 }
