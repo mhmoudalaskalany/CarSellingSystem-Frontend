@@ -12,25 +12,30 @@ import { forkJoin } from 'rxjs';
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
   makes: KeyValuePair[];
+  models: KeyValuePair[];
   filter: any = {};
   constructor(private vehicleService: VehicleService) { }
 
   ngOnInit() {
-    this.getMakesAndVehicles()
-      .subscribe((data: any) => {
-        this.vehicles = data[0];
-        this.makes = data[1];
-      });
+    this.getMakesAndModels().subscribe((data: any) => {
+      this.makes = data[0];
+      this.models = data[1];
+    });
+    this.populateVehicles();
   }
-
-  private getMakesAndVehicles() {
+  private getMakesAndModels() {
     const sources = [
-      this.vehicleService.getVehicles(),
-      this.vehicleService.getMakes()
+      this.vehicleService.getMakes(),
+      this.vehicleService.getModels()
     ];
     return forkJoin(sources);
   }
+  private populateVehicles() {
+    this.vehicleService.getVehicles(this.filter).subscribe((vehicles: Vehicle[]) => {
+      this.vehicles = vehicles;
+    });
+  }
   onFilterChange() {
-    return this.filter.makeId;
+    this.populateVehicles();
   }
 }
