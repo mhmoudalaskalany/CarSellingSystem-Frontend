@@ -24,5 +24,8 @@ export class VehicleService {
   update(vehicle: SaveVehicle) {
     return this.http.put(this.baseUrl + '/api/vehicles/' + vehicle.id , vehicle);
   }
+  delete(id) {
+    return this.http.delete(this.baseUrl + '/api/vehicles/' + id);
+  }
 
 }

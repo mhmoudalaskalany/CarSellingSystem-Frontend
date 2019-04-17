@@ -49,6 +49,7 @@ export class VehicleFormComponent implements OnInit {
       }
     }, error => {
       if (error.status === 404) {
+        this.toastService.error('Vehicle Not Found');
         this.router.navigate(['/home']);
       }
     });
@@ -102,5 +103,12 @@ export class VehicleFormComponent implements OnInit {
       });
     }
   }
-
+  delete() {
+    if (confirm('are you sure')) {
+      this.vehicleService.delete(this.vehicle.id).subscribe((data) => {
+        this.toastService.warning('Vehicle Deleted Successfully');
+        this.router.navigate(['/home']);
+      });
+    }
+  }
 }
