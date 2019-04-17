@@ -43,6 +43,7 @@ export class VehicleFormComponent implements OnInit {
       this.features = data[1];
       if (this.vehicle.id) {
         this.setVehicle(data[2]);
+        this.populateModels();
       }
     }, error => {
       if(error.status === 404) {
@@ -60,7 +61,7 @@ export class VehicleFormComponent implements OnInit {
     this.vehicle.features = _.pluck(v.features , 'id');
   }
   getVehicleData() {
-    let sources = [
+    const sources = [
       this.vehicleService.getMakes(),
       this.vehicleService.getFeatures()
     ];
@@ -71,9 +72,13 @@ export class VehicleFormComponent implements OnInit {
   }
   onMakeChange() {
     // tslint:disable-next-line:triple-equals
+    this.populateModels();
+    delete this.vehicle.modelId;
+  }
+
+  private populateModels() {
     const selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
     this.models = selectedMake ? selectedMake.models : [];
-    delete this.vehicle.modelId;
   }
   onFeatureToggle(id, $event) {
     if ($event.target.checked) {
