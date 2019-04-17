@@ -40,10 +40,10 @@ export class VehicleService {
   /** private methods */
   toQueryString(obj) {
     const parts = [];
-    for (let property in obj) {
-      let value = obj[property];
-      if(value != null && value != undefined)
-      {
+// tslint:disable-next-line: forin
+    for (const property in obj) {
+      const value = obj[property];
+      if (value != null && value !== undefined) {
         parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
       }
       return parts.join('&');
